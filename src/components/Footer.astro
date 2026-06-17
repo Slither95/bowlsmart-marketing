@@ -1,0 +1,48 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-navy border-t border-slate/20 pt-16 pb-8">
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-10">
+    <div>
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-8 h-8 bg-neon-green rounded-full flex items-center justify-center">
+          <span class="text-navy font-bold">B</span>
+        </div>
+        <span class="text-xl font-bold text-white">BowlSmart</span>
+      </div>
+      <p class="text-slate text-sm">Smart bowling ball recommendations and team tools for high school bowlers, coaches, and parents.</p>
+    </div>
+
+    <div>
+      <div class="font-semibold text-white mb-4">Product</div>
+      <div class="flex flex-col gap-2 text-sm">
+        <a href="/features" class="text-slate hover:text-white">Features</a>
+        <a href="/how-it-works" class="text-slate hover:text-white">How it Works</a>
+        <a href="/pricing" class="text-slate hover:text-white">Pricing</a>
+      </div>
+    </div>
+
+    <div>
+      <div class="font-semibold text-white mb-4">For Teams</div>
+      <div class="flex flex-col gap-2 text-sm">
+        <a href="/for-coaches" class="text-slate hover:text-white">Coaches</a>
+        <a href="/for-parents" class="text-slate hover:text-white">Parents</a>
+        <a href="/resources" class="text-slate hover:text-white">Resources</a>
+      </div>
+    </div>
+
+    <div>
+      <div class="font-semibold text-white mb-4">Get the App</div>
+      <div class="flex flex-col gap-3">
+        <a href="#" class="text-sm text-slate hover:text-neon-green">App Store (coming soon)</a>
+        <a href="#" class="text-sm text-slate hover:text-neon-green">Google Play (coming soon)</a>
+        <a href="/get-started" class="btn-primary text-sm mt-2">Join Waitlist</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-16 pt-8 border-t border-slate/20 text-center text-slate text-sm">
+    © {year} BowlSmart. Made with care for high school bowlers.
+  </div>
+</footer>

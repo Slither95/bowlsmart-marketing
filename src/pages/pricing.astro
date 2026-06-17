@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
+---
+
+<Layout>
+  <div class="max-w-3xl mx-auto px-6 py-16 text-center">
+    <h1 class="section-heading">Simple pricing for every team</h1>
+    <p class="mt-4 text-xl text-slate">Start free. Upgrade only when you need the cloud power.</p>
+
+    <div class="mt-10 grid md:grid-cols-2 gap-6 text-left">
+      <div class="card border-neon-green">
+        <div class="font-semibold text-neon-green mb-1">LOCAL / MVP</div>
+        <div class="text-4xl font-bold mb-4">Free</div>
+        <ul class="space-y-2 text-sm mb-8">
+          <li>✓ Full app on device</li>
+          <li>✓ Local invites &amp; roles</li>
+          <li>✓ Ball data &amp; logging</li>
+          <li>✓ Coach tools &amp; comms</li>
+        </ul>
+        <Button href="/get-started" variant="secondary" class="w-full">Start Free</Button>
+      </div>
+
+      <div class="card">
+        <div class="font-semibold text-neon-orange mb-1">CLOUD (COMING SOON)</div>
+        <div class="text-4xl font-bold mb-4">$9<span class="text-base align-super">/mo</span></div>
+        <ul class="space-y-2 text-sm mb-8 text-slate">
+          <li>✓ Cross-device sync</li>
+          <li>✓ Cloud invites &amp; push</li>
+          <li>✓ Match history &amp; exports</li>
+          <li>✓ Priority support</li>
+        </ul>
+        <Button href="/get-started" variant="dark" class="w-full">Join Waitlist</Button>
+      </div>
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #0A192F;
+  --color-navy-light: #112240;
+  --color-slate: #64748B;
+  --color-neon-green: #39FF14;
+  --color-neon-orange: #FF6B35;
+  --color-white: #F8FAFC;
+  --color-dark: #0F172A;
+}
+
+/* Base styles */
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Brand buttons */
+.btn-primary {
+  @apply bg-neon-orange text-white font-semibold px-6 py-3 rounded-lg transition-all hover:bg-orange-600 hover:scale-[1.02] shadow-lg;
+}
+
+.btn-secondary {
+  @apply bg-transparent border-2 border-neon-green text-neon-green font-semibold px-6 py-3 rounded-lg transition-all hover:bg-neon-green hover:text-navy;
+}
+
+.btn-dark {
+  @apply bg-navy-light text-white font-semibold px-6 py-3 rounded-lg transition-all hover:bg-navy;
+}
+
+/* Navigation */
+.nav-link {
+  @apply text-slate hover:text-white transition-colors font-medium;
+}
+
+.nav-link.active {
+  @apply text-neon-green;
+}
+
+/* Hero gradient */
+.hero-gradient {
+  background: linear-gradient(135deg, #0A192F 0%, #112240 100%);
+}
+
+/* Card styles */
+.card {
+  @apply bg-navy-light border border-slate/20 rounded-xl p-6 transition-all hover:border-neon-green/50;
+}
+
+/* Section headings */
+.section-heading {
+  @apply text-4xl md:text-5xl font-bold tracking-tight text-white;
+}

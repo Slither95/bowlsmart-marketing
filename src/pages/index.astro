@@ -1,11 +1,99 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Button from '../components/Button.astro';
 ---
 
 <Layout>
-	<Welcome />
+  <!-- Hero -->
+  <section class="hero-gradient min-h-[90vh] flex items-center relative overflow-hidden">
+    <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+      <div class="inline-flex items-center gap-2 bg-navy-light px-4 py-1 rounded-full text-sm mb-6 border border-neon-green/30">
+        <span class="text-neon-green">●</span> Now in beta for high school teams
+      </div>
+      
+      <h1 class="text-6xl md:text-7xl font-bold tracking-tighter mb-6">
+        Smart bowling.<br />
+        <span class="text-neon-green">Smarter teams.</span>
+      </h1>
+      
+      <p class="max-w-2xl mx-auto text-xl text-slate mb-10">
+        BowlSmart helps high school bowlers, coaches, and parents build better arsenals, 
+        make smarter lane decisions, and stay connected — without needing expert-level knowledge.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <Button href="/get-started" variant="primary" class="text-lg px-8 py-4">Get Started Free</Button>
+        <Button href="/how-it-works" variant="secondary" class="text-lg px-8 py-4">See How It Works</Button>
+      </div>
+      
+      <div class="mt-12 text-sm text-slate">Used by teams across the country • Works on iOS, Android, and Web</div>
+    </div>
+    
+    <!-- Decorative bowling ball -->
+    <div class="absolute right-10 bottom-10 w-64 h-64 rounded-full border-[20px] border-neon-green/10 hidden lg:block"></div>
+  </section>
+
+  <!-- Roles / Who it's for -->
+  <section class="max-w-7xl mx-auto px-6 py-20">
+    <div class="text-center mb-12">
+      <div class="text-neon-orange font-semibold tracking-widest text-sm mb-2">FOR EVERYONE ON THE TEAM</div>
+      <h2 class="section-heading">Built for bowlers, coaches &amp; parents</h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="card">
+        <div class="text-neon-green text-4xl mb-4">🎳</div>
+        <h3 class="text-2xl font-semibold mb-3">Individual Bowlers</h3>
+        <p class="text-slate mb-6">Track your arsenal, log games, get personalized ball recommendations, and see your progress over time.</p>
+        <a href="/features" class="text-neon-green hover:underline">Explore bowler tools →</a>
+      </div>
+      
+      <div class="card">
+        <div class="text-neon-orange text-4xl mb-4">📋</div>
+        <h3 class="text-2xl font-semibold mb-3">Coaches</h3>
+        <p class="text-slate mb-6">Manage your roster, send invites, schedule matches, broadcast messages, and monitor team stats in one place.</p>
+        <a href="/for-coaches" class="text-neon-orange hover:underline">Coach dashboard →</a>
+      </div>
+      
+      <div class="card">
+        <div class="text-neon-green text-4xl mb-4">👨‍👩‍👧</div>
+        <h3 class="text-2xl font-semibold mb-3">Parents</h3>
+        <p class="text-slate mb-6">Stay in the loop with read-only access, real-time notifications, and peace of mind about your athlete's progress.</p>
+        <a href="/for-parents" class="text-neon-green hover:underline">Parent view →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick value props -->
+  <section class="bg-navy-light py-16">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+      <h2 class="section-heading mb-12">Everything you need to bowl smarter</h2>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-left">
+        <div>
+          <div class="font-semibold text-lg mb-1">Arsenal Builder</div>
+          <div class="text-slate text-sm">Smart recommendations based on your style and lane conditions.</div>
+        </div>
+        <div>
+          <div class="font-semibold text-lg mb-1">Game Logging</div>
+          <div class="text-slate text-sm">Quick session entry with per-game notes and averages that carry forward.</div>
+        </div>
+        <div>
+          <div class="font-semibold text-lg mb-1">Team Comms</div>
+          <div class="text-slate text-sm">1:1 chat, broadcasts, and group messaging with demo replies.</div>
+        </div>
+        <div>
+          <div class="font-semibold text-lg mb-1">Invites &amp; Roles</div>
+          <div class="text-slate text-sm">QR codes, local + cloud invites, parent linking, and staff permissions.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="max-w-3xl mx-auto px-6 py-20 text-center">
+    <h2 class="section-heading mb-4">Ready to upgrade your team's game?</h2>
+    <p class="text-xl text-slate mb-8">Join the growing number of high school programs using BowlSmart.</p>
+    <Button href="/get-started" variant="primary" class="text-lg">Start Your Free Account →</Button>
+  </section>
 </Layout>

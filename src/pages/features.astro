@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
+---
+
+<Layout>
+  <div class="max-w-5xl mx-auto px-6 py-16">
+    <div class="text-center mb-12">
+      <div class="text-neon-orange tracking-[3px] text-sm font-semibold mb-2">POWERFUL YET SIMPLE</div>
+      <h1 class="section-heading">Features that grow with your team</h1>
+      <p class="mt-4 text-xl text-slate max-w-prose mx-auto">From first-year bowlers to varsity coaches — BowlSmart adapts to every role.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="card">
+        <h3 class="font-semibold text-xl mb-2">🎳 Arsenal &amp; Ball Recommendations</h3>
+        <p class="text-slate">Personalized suggestions based on your rev rate, speed, and current lane conditions. Build a complete arsenal without guesswork.</p>
+      </div>
+      <div class="card">
+        <h3 class="font-semibold text-xl mb-2">📈 Session Logging &amp; Averages</h3>
+        <p class="text-slate">Log games in seconds. Track season averages, per-ball performance, and trends. Supports quick per-game entry and full match history.</p>
+      </div>
+      <div class="card">
+        <h3 class="font-semibold text-xl mb-2">💬 Team Communications</h3>
+        <p class="text-slate">Inbox, 1:1 chat, broadcasts, and group threads. Canonical thread keys ensure conversations are always organized. Demo mode with auto-replies for testing.</p>
+      </div>
+      <div class="card">
+        <h3 class="font-semibold text-xl mb-2">📅 Scheduling &amp; Match Results</h3>
+        <p class="text-slate">Coach-created team schedules with calendar export. Log match scores that flow into athlete profiles and season stats.</p>
+      </div>
+      <div class="card">
+        <h3 class="font-semibold text-xl mb-2">🔗 Invites, Roles &amp; Permissions</h3>
+        <p class="text-slate">QR code + code invites. Local-first MVP plus cloud sync. Staff roles (assistant coach, scorekeeper) with delegated permissions.</p>
+      </div>
+      <div class="card">
+        <h3 class="font-semibold text-xl mb-2">🔔 Notifications &amp; Parent Access</h3>
+        <p class="text-slate">Web push notifications for new messages. Parents get read-only view with real-time updates and no extra logins needed.</p>
+      </div>
+    </div>
+
+    <div class="mt-12 text-center">
+      <Button href="/get-started" variant="primary">Try it free</Button>
+    </div>
+  </div>
+</Layout>

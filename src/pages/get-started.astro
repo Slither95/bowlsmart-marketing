@@ -1,0 +1,46 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
+---
+
+<Layout>
+  <div class="max-w-xl mx-auto px-6 py-16">
+    <h1 class="section-heading text-center">Ready to get started?</h1>
+    <p class="text-center text-xl text-slate mt-4">Download the app or join our waitlist for early cloud access.</p>
+
+    <div class="mt-10 space-y-4">
+      <div class="card">
+        <div class="font-semibold mb-1">📱 Download the App</div>
+        <p class="text-sm text-slate mb-4">Available on iOS and Android. Works great on desktop too via web.</p>
+        <div class="flex gap-3">
+          <a href="#" class="btn-dark flex-1 text-center text-sm">App Store</a>
+          <a href="#" class="btn-dark flex-1 text-center text-sm">Google Play</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="font-semibold mb-3">Join the waitlist</div>
+        <form id="waitlist-form" class="space-y-4">
+          <input type="text" placeholder="Full name" class="w-full bg-navy border border-slate/30 rounded-lg px-4 py-3 text-white placeholder:text-slate focus:outline-none focus:border-neon-green" required />
+          <input type="email" placeholder="School email" class="w-full bg-navy border border-slate/30 rounded-lg px-4 py-3 text-white placeholder:text-slate focus:outline-none focus:border-neon-green" required />
+          <select class="w-full bg-navy border border-slate/30 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-neon-green">
+            <option>Bowler</option>
+            <option>Coach</option>
+            <option>Parent</option>
+          </select>
+          <Button type="submit" variant="primary" class="w-full">Join Waitlist</Button>
+        </form>
+        <p class="text-xs text-center text-slate mt-4">We'll email you when cloud features are ready. No spam, ever.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('waitlist-form');
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert("Thanks! You're on the list. We'll be in touch soon.");
+      form.reset();
+    });
+  </script>
+</Layout>

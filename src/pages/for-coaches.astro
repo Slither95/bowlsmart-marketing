@@ -1,0 +1,40 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
+---
+
+<Layout>
+  <div class="max-w-5xl mx-auto px-6 py-16">
+    <div class="mb-12">
+      <div class="text-neon-orange font-semibold tracking-widest">COACH DASHBOARD</div>
+      <h1 class="section-heading mt-2">Everything coaches need to run a winning program</h1>
+    </div>
+
+    <div class="prose prose-invert max-w-none text-lg text-slate mb-12">
+      <p>Manage your entire roster, communicate instantly, schedule matches, and review detailed stats — all from one clean interface designed for busy high school coaches.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-12">
+      <div class="card">
+        <h4 class="font-semibold mb-2">Roster &amp; Invites</h4>
+        <p>Generate QR codes or 6-digit codes. Athletes and parents join in seconds. Supports staff roles with granular permissions.</p>
+      </div>
+      <div class="card">
+        <h4 class="font-semibold mb-2">Messaging &amp; Broadcasts</h4>
+        <p>Send team-wide announcements or 1:1 notes. Demo mode lets you test the full athlete reply flow instantly.</p>
+      </div>
+      <div class="card">
+        <h4 class="font-semibold mb-2">Schedules &amp; Results</h4>
+        <p>Create season schedules, export to calendar, and log match scores that automatically update athlete profiles.</p>
+      </div>
+      <div class="card">
+        <h4 class="font-semibold mb-2">Team Analytics</h4>
+        <p>View season averages, ball usage, and progress across the whole squad at a glance.</p>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <Button href="/get-started" variant="primary">Start coaching smarter</Button>
+    </div>
+  </div>
+</Layout>
