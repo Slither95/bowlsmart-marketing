@@ -1,46 +1,42 @@
-# Astro Starter Kit: Basics
+# BowlSmart Marketing Site
 
-```sh
-npm create astro@latest -- --template basics
+Multi-page marketing website for BowlSmart — the smart bowling app for high school teams.
+
+**Tech:** Astro + Tailwind + MDX + Cloudflare Pages + Adapter
+
+## Local development
+
+```bash
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Deploy to Cloudflare Pages
 
-## 🚀 Project Structure
+1. Connect this repo to Cloudflare Pages.
+2. Build command: `npm run build`
+3. Output directory: `dist`
+4. The `@astrojs/cloudflare` adapter + wrangler.jsonc are already configured.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Worker automation (optional)
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+You can add a Cloudflare Worker (e.g., `worker/index.js`) that:
+- Handles waitlist submissions (POST /api/waitlist)
+- Refreshes dynamic content (latest ball recommendations, testimonials)
+- Uses KV or D1 for storage
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+Example route can be added later via `functions/` or a separate Worker.
 
-## 🧞 Commands
+## Branding
 
-All commands are run from the root of the project, from a terminal:
+Navy (#0A192F), Neon Green (#39FF14), Neon Orange (#FF6B35) — matching the Flutter app exactly.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+Content pulled from BOWLSMART_PROJECT_PLAN.md and README.
 
-## 👀 Want to learn more?
+## Next
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- Replace placeholder store links with real App Store / Play links when published.
+- Add real screenshots from the app.
+- Expand MDX blog with more guides.
+
+Built separately from the main Flutter repo so it can be updated independently via Worker or GitHub Actions.# bowlsmart-marketing
