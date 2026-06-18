@@ -51,6 +51,14 @@ export const POST: APIRoute = async ({ request }) => {
     return Response.json({ error: 'This email is already on the waitlist.' }, { status: 409 });
   }
 
+  if (!env.RESEND_API_KEY || !env.WAITLIST_NOTIFY_EMAIL) {
+    console.error('Waitlist secrets are not configured on the Worker.');
+    return Response.json(
+      { error: 'Waitlist is temporarily unavailable. Please try again later.' },
+      { status: 503 },
+    );
+  }
+
   const entry: WaitlistEntry = {
     name: name.trim(),
     email: normalizedEmail,
@@ -60,14 +68,21 @@ export const POST: APIRoute = async ({ request }) => {
 
   await kv.put(key, JSON.stringify(entry));
 
-  try {
-    await sendWaitlistNotification(entry, {
-      apiKey: env.RESEND_API_KEY,
-      notifyEmail: env.WAITLIST_NOTIFY_EMAIL,
-      fromEmail: env.WAITLIST_FROM_EMAIL,
-    });
-  } catch (error) {
-    console.error('Waitlist notification failed:', error);
+  const notification = await sendWaitlistNotification(entry, {
+    apiKey: env.RESEND_API_KEY,
+    notifyEmail: env.WAITLIST_NOTIFY_EMAIL,
+    fromEmail: env.WAITLIST_FROM_EMAIL,
+  });
+
+  if (!notification.sent) {
+    console.error('Waitlist notification failed:', notification.error);
+    return Response.json(
+      {
+        error:
+          'Your signup was saved, but we could not send the notification email. Please try again later or contact support.',
+      },
+      { status: 502 },
+    );
   }
 
   return Response.json({ ok: true }, { status: 201 });

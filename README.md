@@ -27,7 +27,7 @@ The Worker must include the `main` entrypoint from `wrangler.jsonc`. If Cloudfla
 
 ### Custom domain (`bowl-smart.com`)
 
-`wrangler.jsonc` is configured to serve on `bowl-smart.com` and `www.bowl-smart.com`. The domain must already be a zone in your Cloudflare account (it is).
+`wrangler.jsonc` serves `bowl-smart.com` and `www.bowl-smart.com` as Worker custom domains. **Do not** use a `www` CNAME to the apex — delete any `www` CNAME in Cloudflare DNS before deploying, then run `npm run deploy` so Cloudflare creates Worker records for both hostnames.
 
 1. Deploy: `npm run deploy`
 2. Cloudflare will create the DNS records and SSL certs automatically.
@@ -38,12 +38,17 @@ If the apex domain still shows a "Launching Soon" placeholder, remove any old DN
 
 ### Secrets (waitlist email)
 
-After the Worker is deployed, add secrets under **Workers & Pages → bowlsmart-marketing → Settings → Variables and Secrets** (or via CLI):
+After the Worker is deployed, add secrets under **Workers & Pages → bowlsmart-marketing → Settings → Variables and Secrets** (or via CLI).
+
+`.dev.vars` is for local development only — production needs these secrets on the Worker:
 
 ```bash
 npx wrangler secret put RESEND_API_KEY
 npx wrangler secret put WAITLIST_NOTIFY_EMAIL
+npx wrangler secret put WAITLIST_FROM_EMAIL
 ```
+
+Use `rich@bowl-smart.com` for `WAITLIST_NOTIFY_EMAIL`. For `WAITLIST_FROM_EMAIL`, verify `bowl-smart.com` in [Resend](https://resend.com/domains) and use something like `BowlSmart <hello@bowl-smart.com>`. Until the domain is verified, `BowlSmart <onboarding@resend.dev>` only works for testing and may only deliver to your Resend account email.
 
 ## Worker automation
 

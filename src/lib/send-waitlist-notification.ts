@@ -5,6 +5,10 @@ type WaitlistEntry = {
   createdAt: string;
 };
 
+type NotificationResult =
+  | { sent: true }
+  | { sent: false; error: string };
+
 export async function sendWaitlistNotification(
   entry: WaitlistEntry,
   config: {
@@ -12,12 +16,14 @@ export async function sendWaitlistNotification(
     notifyEmail?: string;
     fromEmail?: string;
   },
-): Promise<void> {
+): Promise<NotificationResult> {
   const { apiKey, notifyEmail, fromEmail = 'BowlSmart <onboarding@resend.dev>' } = config;
 
   if (!apiKey || !notifyEmail) {
-    console.warn('Waitlist email skipped: RESEND_API_KEY or WAITLIST_NOTIFY_EMAIL not configured');
-    return;
+    return {
+      sent: false,
+      error: 'RESEND_API_KEY or WAITLIST_NOTIFY_EMAIL is not configured on the Worker.',
+    };
   }
 
   const response = await fetch('https://api.resend.com/emails', {
@@ -29,6 +35,7 @@ export async function sendWaitlistNotification(
     body: JSON.stringify({
       from: fromEmail,
       to: [notifyEmail],
+      reply_to: entry.email,
       subject: `New waitlist signup: ${entry.name}`,
       text: [
         'New BowlSmart waitlist signup',
@@ -44,5 +51,8 @@ export async function sendWaitlistNotification(
   if (!response.ok) {
     const error = await response.text();
     console.error('Failed to send waitlist notification:', error);
+    return { sent: false, error };
   }
+
+  return { sent: true };
 }
