@@ -11,21 +11,54 @@ npm install
 npm run dev
 ```
 
-## Deploy to Cloudflare Pages
+## Deploy to Cloudflare Workers
 
-1. Connect this repo to Cloudflare Pages.
-2. Build command: `npm run build`
-3. Output directory: `dist`
-4. The `@astrojs/cloudflare` adapter + wrangler.jsonc are already configured.
+This site uses the Astro Cloudflare adapter with a Worker (not static-only). After `npm run build`, deploy with:
 
-## Worker automation (optional)
+```bash
+npm run deploy
+```
 
-You can add a Cloudflare Worker (e.g., `worker/index.js`) that:
-- Handles waitlist submissions (POST /api/waitlist)
-- Refreshes dynamic content (latest ball recommendations, testimonials)
-- Uses KV or D1 for storage
+Or in Cloudflare **Workers Builds**, set:
+- **Build command:** `npm run build`
+- **Deploy command:** `npx wrangler deploy`
 
-Example route can be added later via `functions/` or a separate Worker.
+The Worker must include the `main` entrypoint from `wrangler.jsonc`. If Cloudflare says the project "only has static assets", the Worker script was not deployed — redeploy with the command above.
+
+### Secrets (waitlist email)
+
+After the Worker is deployed, add secrets under **Workers & Pages → bowlsmart-marketing → Settings → Variables and Secrets** (or via CLI):
+
+```bash
+npx wrangler secret put RESEND_API_KEY
+npx wrangler secret put WAITLIST_NOTIFY_EMAIL
+```
+
+## Worker automation
+
+The waitlist form on `/get-started` posts to `POST /api/waitlist` and stores submissions in a Cloudflare KV namespace (`WAITLIST` binding).
+
+On first deploy, Cloudflare will auto-provision the KV namespace from `wrangler.jsonc`. To test bindings locally, use:
+
+```bash
+npm run build
+npx wrangler dev
+```
+
+Entries are stored as `entry:{email}` with name, email, role, and timestamp.
+
+### Email notifications
+
+Each signup also emails you via [Resend](https://resend.com). Set these secrets on your Worker:
+
+```bash
+npx wrangler secret put RESEND_API_KEY
+npx wrangler secret put WAITLIST_NOTIFY_EMAIL
+```
+
+Optional: `WAITLIST_FROM_EMAIL` (defaults to `BowlSmart <onboarding@resend.dev>` for Resend testing). For production, verify your domain in Resend and use an address on that domain.
+
+For local testing, copy `.dev.vars.example` to `.dev.vars` and fill in your values.
 
 ## Branding
 

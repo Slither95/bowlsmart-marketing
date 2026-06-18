@@ -4,9 +4,10 @@ interface Props {
   href?: string;
   type?: 'button' | 'submit';
   class?: string;
+  id?: string;
 }
 
-const { variant = 'primary', href, type = 'button', class: className = '' } = Astro.props;
+const { variant = 'primary', href, type = 'button', class: className = '', id } = Astro.props;
 
 const base = 'inline-flex items-center justify-center font-semibold px-6 py-3 rounded-lg transition-all text-center';
 
@@ -22,5 +23,5 @@ const classes = `${base} ${variants[variant]} ${className}`;
 {href ? (
   <a href={href} class={classes}><slot /></a>
 ) : (
-  <button type={type} class={classes}><slot /></button>
+  <button type={type} id={id} class={classes}><slot /></button>
 )}

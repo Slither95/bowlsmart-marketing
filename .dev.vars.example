@@ -1,0 +1,3 @@
+RESEND_API_KEY=re_your_api_key
+WAITLIST_NOTIFY_EMAIL=you@example.com
+WAITLIST_FROM_EMAIL=BowlSmart <onboarding@resend.dev>

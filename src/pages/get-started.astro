@@ -6,41 +6,81 @@ import Button from '../components/Button.astro';
 <Layout>
   <div class="max-w-xl mx-auto px-6 py-16">
     <h1 class="section-heading text-center">Ready to get started?</h1>
-    <p class="text-center text-xl text-slate mt-4">Download the app or join our waitlist for early cloud access.</p>
+    <p class="text-center text-xl text-slate mt-4">Join the waitlist for early access when the app launches.</p>
 
     <div class="mt-10 space-y-4">
       <div class="card">
         <div class="font-semibold mb-1">📱 Download the App</div>
-        <p class="text-sm text-slate mb-4">Available on iOS and Android. Works great on desktop too via web.</p>
+        <p class="text-sm text-slate mb-4">Releasing soon on iOS and Android. Works great on desktop too via web.</p>
         <div class="flex gap-3">
-          <a href="#" class="btn-dark flex-1 text-center text-sm">App Store</a>
-          <a href="#" class="btn-dark flex-1 text-center text-sm">Google Play</a>
+          <span class="btn-dark flex-1 text-center text-sm opacity-60 cursor-not-allowed">App Store — Coming soon</span>
+          <span class="btn-dark flex-1 text-center text-sm opacity-60 cursor-not-allowed">Google Play — Coming soon</span>
         </div>
       </div>
 
       <div class="card">
         <div class="font-semibold mb-3">Join the waitlist</div>
         <form id="waitlist-form" class="space-y-4">
-          <input type="text" placeholder="Full name" class="w-full bg-navy border border-slate/30 rounded-lg px-4 py-3 text-white placeholder:text-slate focus:outline-none focus:border-neon-green" required />
-          <input type="email" placeholder="School email" class="w-full bg-navy border border-slate/30 rounded-lg px-4 py-3 text-white placeholder:text-slate focus:outline-none focus:border-neon-green" required />
-          <select class="w-full bg-navy border border-slate/30 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-neon-green">
-            <option>Bowler</option>
-            <option>Coach</option>
-            <option>Parent</option>
+          <input type="text" name="name" placeholder="Full name" class="w-full bg-navy border border-slate/30 rounded-lg px-4 py-3 text-white placeholder:text-slate focus:outline-none focus:border-neon-green" required />
+          <input type="email" name="email" placeholder="School email" class="w-full bg-navy border border-slate/30 rounded-lg px-4 py-3 text-white placeholder:text-slate focus:outline-none focus:border-neon-green" required />
+          <select name="role" class="w-full bg-navy border border-slate/30 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-neon-green" required>
+            <option value="Bowler">Bowler</option>
+            <option value="Coach">Coach</option>
+            <option value="Parent">Parent</option>
           </select>
-          <Button type="submit" variant="primary" class="w-full">Join Waitlist</Button>
+          <Button type="submit" variant="primary" class="w-full" id="waitlist-submit">Join Waitlist</Button>
         </form>
+        <p id="waitlist-status" class="text-sm text-center mt-4 hidden" role="status"></p>
         <p class="text-xs text-center text-slate mt-4">We'll email you when cloud features are ready. No spam, ever.</p>
       </div>
     </div>
   </div>
 
   <script>
-    const form = document.getElementById('waitlist-form');
-    form?.addEventListener('submit', (e) => {
+    const form = document.getElementById('waitlist-form') as HTMLFormElement | null;
+    const status = document.getElementById('waitlist-status');
+    const submitBtn = document.getElementById('waitlist-submit');
+
+    form?.addEventListener('submit', async (e) => {
       e.preventDefault();
-      alert("Thanks! You're on the list. We'll be in touch soon.");
-      form.reset();
+
+      if (!status || !submitBtn) return;
+
+      const formData = new FormData(form);
+      const payload = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        role: formData.get('role'),
+      };
+
+      submitBtn.setAttribute('disabled', 'true');
+      status.classList.remove('hidden', 'text-neon-green', 'text-red-400');
+      status.textContent = 'Submitting...';
+
+      try {
+        const response = await fetch('/api/waitlist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+          status.textContent = data.error ?? 'Something went wrong. Please try again.';
+          status.classList.add('text-red-400');
+          return;
+        }
+
+        status.textContent = "Thanks! You're on the list. We'll be in touch soon.";
+        status.classList.add('text-neon-green');
+        form.reset();
+      } catch {
+        status.textContent = 'Unable to reach the server. Please try again.';
+        status.classList.add('text-red-400');
+      } finally {
+        submitBtn.removeAttribute('disabled');
+      }
     });
   </script>
 </Layout>
