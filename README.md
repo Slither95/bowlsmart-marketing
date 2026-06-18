@@ -2,7 +2,7 @@
 
 Multi-page marketing website for BowlSmart — the smart bowling app for high school teams.
 
-**Tech:** Astro + Tailwind + MDX + Cloudflare Pages + Adapter
+**Tech:** Astro + Tailwind + MDX + Cloudflare Workers + Adapter
 
 ## Local development
 
@@ -24,6 +24,17 @@ Or in Cloudflare **Workers Builds**, set:
 - **Deploy command:** `npx wrangler deploy`
 
 The Worker must include the `main` entrypoint from `wrangler.jsonc`. If Cloudflare says the project "only has static assets", the Worker script was not deployed — redeploy with the command above.
+
+### Custom domain (`bowl-smart.com`)
+
+`wrangler.jsonc` is configured to serve on `bowl-smart.com` and `www.bowl-smart.com`. The domain must already be a zone in your Cloudflare account (it is).
+
+1. Deploy: `npm run deploy`
+2. Cloudflare will create the DNS records and SSL certs automatically.
+
+To verify or add manually: **Workers & Pages → bowlsmart-marketing → Settings → Domains & Routes → Add → Custom domain**.
+
+If the apex domain still shows a "Launching Soon" placeholder, remove any old DNS records or Pages project pointing at `bowl-smart.com` first, then redeploy.
 
 ### Secrets (waitlist email)
 

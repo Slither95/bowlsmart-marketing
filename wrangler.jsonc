@@ -13,6 +13,16 @@
 	"observability": {
 		"enabled": true
 	},
+	"routes": [
+		{
+			"pattern": "bowl-smart.com",
+			"custom_domain": true
+		},
+		{
+			"pattern": "www.bowl-smart.com",
+			"custom_domain": true
+		}
+	],
 	"kv_namespaces": [
 		{
 			"binding": "WAITLIST",
