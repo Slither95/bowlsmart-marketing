@@ -30,7 +30,7 @@ import Button from '../components/Button.astro';
           </select>
           <Button type="submit" variant="primary" class="w-full" id="waitlist-submit">Join Waitlist</Button>
         </form>
-        <p id="waitlist-status" class="text-sm text-center mt-4 hidden" role="status"></p>
+        <p id="waitlist-status" class="hidden text-sm text-center mt-4 rounded-lg px-4 py-3 border" role="alert" aria-live="assertive"></p>
         <p class="text-xs text-center text-slate mt-4">We'll email you when cloud features are ready. No spam, ever.</p>
       </div>
     </div>
@@ -40,6 +40,26 @@ import Button from '../components/Button.astro';
     const form = document.getElementById('waitlist-form') as HTMLFormElement | null;
     const status = document.getElementById('waitlist-status');
     const submitBtn = document.getElementById('waitlist-submit');
+
+    function showStatus(message: string, type: 'loading' | 'success' | 'error') {
+      if (!status) return;
+
+      status.textContent = message;
+      status.classList.remove('hidden', 'text-neon-green', 'text-red-300', 'border-neon-green/40', 'border-red-400/40', 'bg-neon-green/10', 'bg-red-500/10');
+
+      if (type === 'loading') {
+        status.classList.add('text-slate', 'border-slate/30', 'bg-navy-light');
+        return;
+      }
+
+      if (type === 'success') {
+        status.classList.add('text-neon-green', 'border-neon-green/40', 'bg-neon-green/10');
+        return;
+      }
+
+      status.classList.add('text-red-300', 'border-red-400/40', 'bg-red-500/10');
+      window.alert(message);
+    }
 
     form?.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -54,8 +74,7 @@ import Button from '../components/Button.astro';
       };
 
       submitBtn.setAttribute('disabled', 'true');
-      status.classList.remove('hidden', 'text-neon-green', 'text-red-400');
-      status.textContent = 'Submitting...';
+      showStatus('Submitting...', 'loading');
 
       try {
         const response = await fetch('/api/waitlist', {
@@ -67,17 +86,15 @@ import Button from '../components/Button.astro';
         const data = await response.json().catch(() => ({}));
 
         if (!response.ok) {
-          status.textContent = data.error ?? 'Something went wrong. Please try again.';
-          status.classList.add('text-red-400');
+          const message = data.error ?? 'Something went wrong. Please try again.';
+          showStatus(message, 'error');
           return;
         }
 
-        status.textContent = "Thanks! You're on the list. We'll be in touch soon.";
-        status.classList.add('text-neon-green');
+        showStatus("Thanks! You're on the list. We'll be in touch soon.", 'success');
         form.reset();
       } catch {
-        status.textContent = 'Unable to reach the server. Please try again.';
-        status.classList.add('text-red-400');
+        showStatus('Unable to reach the server. Please try again.', 'error');
       } finally {
         submitBtn.removeAttribute('disabled');
       }

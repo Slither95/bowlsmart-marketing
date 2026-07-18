@@ -66,8 +66,6 @@ export const POST: APIRoute = async ({ request }) => {
     createdAt: new Date().toISOString(),
   };
 
-  await kv.put(key, JSON.stringify(entry));
-
   const notification = await sendWaitlistNotification(entry, {
     apiKey: env.RESEND_API_KEY,
     notifyEmail: env.WAITLIST_NOTIFY_EMAIL,
@@ -77,13 +75,12 @@ export const POST: APIRoute = async ({ request }) => {
   if (!notification.sent) {
     console.error('Waitlist notification failed:', notification.error);
     return Response.json(
-      {
-        error:
-          'Your signup was saved, but we could not send the notification email. Please try again later or contact support.',
-      },
+      { error: notification.error ?? 'Could not send notification email. Please try again later.' },
       { status: 502 },
     );
   }
+
+  await kv.put(key, JSON.stringify(entry));
 
   return Response.json({ ok: true }, { status: 201 });
 };

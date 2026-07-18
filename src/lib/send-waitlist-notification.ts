@@ -6,7 +6,7 @@ type WaitlistEntry = {
 };
 
 type NotificationResult =
-  | { sent: true }
+  | { sent: true; id: string }
   | { sent: false; error: string };
 
 export async function sendWaitlistNotification(
@@ -48,11 +48,24 @@ export async function sendWaitlistNotification(
     }),
   });
 
+  const raw = await response.text();
+  let payload: { id?: string; message?: string } | null = null;
+
+  try {
+    payload = JSON.parse(raw);
+  } catch {
+    payload = null;
+  }
+
   if (!response.ok) {
-    const error = await response.text();
+    const error = payload?.message ?? raw;
     console.error('Failed to send waitlist notification:', error);
     return { sent: false, error };
   }
 
-  return { sent: true };
+  if (!payload?.id) {
+    return { sent: false, error: 'Resend accepted the request but did not return an email id.' };
+  }
+
+  return { sent: true, id: payload.id };
 }
