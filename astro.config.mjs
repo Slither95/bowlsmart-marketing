@@ -13,6 +13,10 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
+  redirects: {
+    '/app': 'https://bowlsmart-6b195.web.app/'
+  },
+
   integrations: [mdx()],
   adapter: cloudflare()
 });
